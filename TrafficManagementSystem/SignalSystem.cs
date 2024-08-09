@@ -15,12 +15,15 @@ namespace TrafficManagementSystem
         //time left on each signal to change to Green/Red
         public int atime, btime, ctime, dtime;
 
+        public string mode;
+        
+
         //constructor
        public  SignalSystem()
         {   //by default, a-c is open
             a = "Green";
             b = "Red";
-            c = "Green";
+            c = "Red";
             d = "Red";
             atime = 30;
             btime = 30;
@@ -77,7 +80,7 @@ namespace TrafficManagementSystem
         {   //by default, a-c is open
             a = "Green";
             b = "Red";
-            c = "Green";
+            c = "Red";
             d = "Red";
             atime = 30;
             btime = 30;

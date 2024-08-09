@@ -6,6 +6,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using static System.Runtime.InteropServices.JavaScript.JSType;
+using System.Numerics;
+using System.Diagnostics.CodeAnalysis;
+using System.Text.RegularExpressions;
+
 
 namespace TrafficManagementSystem { 
 
@@ -46,7 +50,7 @@ namespace TrafficManagementSystem {
                     //make changes
                 }
 
-                if (option == 2)
+                else if (option == 2)
                 {
                     Console.Clear();
                     //display table and menu
@@ -56,58 +60,52 @@ namespace TrafficManagementSystem {
 
                     //call function for maintaining signal manually
                     string action;
+                    
                     do
                     {
-                        //Signal A
 
-                        if (signal.a == "Red")
-                            Console.WriteLine("Press A : To change Signal A from Red to Green");
-                        else
-                            Console.WriteLine("Press A : To change Signal A from Green to Red");
-
-                        //Signal B
-                        if (signal.b == "Red")
-                            Console.WriteLine("Press B : To change Signal B from Red to Green");
-                        else
-                            Console.WriteLine("Press B : To change Signal B from Green to Red");
-
-                        //Signal C
-                        if (signal.c == "Red")
-                            Console.WriteLine("Press C : To change Signal C from Red to Green");
-                        else
-                            Console.WriteLine("Press C : To change Signal C from Green to Red");
-
-                        //Signal D
-                        if (signal.d == "Red")
-                            Console.WriteLine("Press D : To change Signal D from Red to Green");
-                        else
-                            Console.WriteLine("Press D : To change Signal D from Green to Red");
-
-
+                        Console.Write("Enter the Lane you want to turn green / Enter the option menu : ");
                         action = Console.ReadLine();
+
+                        if (!action.All(char.IsDigit))
+                        {
+                            ManualMode.manual(action,signal);
+                            Console.WriteLine("Manual Signal Updated");
+                        }
+                        else
+                        {
+                            
+                            break;
+                        }
+                        
+
+                       
                         //call the required action
                         Console.Clear();
                         display.DrawTable(signal);
                         display.DisplayMenu("Manual");
-                    } while (action != "1" && action != "3" && action != "4");
-                    if(action== "1")
-                    {
-                        //change back to automatic
-                    }
+                    } while (true);
+                    option = Int32.Parse(action);
 
-                    if(action== "3")
-                    {
-                        //change to emergency
-                    }
+                    //if(action== "1")
+                    //{
+                    //    //change back to automatic
+                    //}
 
-                    if(action== "4")
-                    {
+                    //if(action== "3")
+                    //{
+                    //    //change to emergency
+                    //    Console.WriteLine("You are in Emergency Mode");
+                    //}
 
-                    }
+                    //if(action== "4")
+                    //{
+
+                    //}
                     
                 }
 
-                if(option == 3)
+                else if(option == 3)
                 {
                     Console.Clear();
                     //display table and menu
@@ -158,7 +156,7 @@ namespace TrafficManagementSystem {
 
                 }
 
-                option = Convert.ToInt32(Console.ReadLine());
+                //option = Convert.ToInt32(Console.ReadLine());
             }
 
         }    
