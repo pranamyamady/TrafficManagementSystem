@@ -15,6 +15,9 @@ namespace TrafficManagementSystem
         //time left on each signal to change to Green/Red
         public int atime, btime, ctime, dtime;
 
+        //String indicating which mode they system is in: MANUAL/AUTO/EMERGENCY
+        public string mode;
+        
         //constructor
        public  SignalSystem()
         {   //by default, a-c is open
@@ -22,54 +25,39 @@ namespace TrafficManagementSystem
             b = "Red";
             c = "Green";
             d = "Red";
-            atime = 30;
-            btime = 30;
-            ctime = 30;
-            dtime = 30;
+            atime = 10;
+            btime = 10;
+            ctime = 10;
+            dtime = 10;
+            mode = "AUTO";
         }
 
-        //changes A signal
-        public void ChangeASignal(string to)
+        //changes a signal 
+        // param: signal A/B/C/D
+        public void ChangeSignal(string signal)
         {
-            if (to == "Green")
+            switch (signal)
             {
-                a = "Green";
+                case "A":
+                    this.a = "Green";
+                    this.b = this.c = this.d = "Red";
+                    break;
+                case "B":
+                    this.b = "Green";
+                    this.a = this.c = this.d = "Red";
+                    break;
+                case "C":
+                    this.c = "Green";
+                    this.b = this.a = this.d = "Red";
+                    break;
+                case "D":
+                    this.d = "Green";
+                    this.b = this.c = this.a = "Red";
+                    break;
+                default:
+                    this.a = this.b = this.c = this.d = "Red";
+                    break;
             }
-            else a = "Red";
-
-        }
-
-        //changes B Signal
-        public void ChangeBSignal(string to)
-        {
-            if (to == "Green")
-            {
-                b = "Green";
-            }
-            else b = "Red";
-
-        }
-        
-        //changes C Signal
-        public void ChangeCSignal(string to)
-        {
-            if (to == "Green")
-            {
-                c = "Green";
-            }
-            else c = "Red";
-
-        }
-
-        //changes D Signal
-        public void ChangeDSignal(string to)
-        {
-            if (to == "Green")
-            {
-                d = "Green";
-            }
-            else d = "Red";
-
         }
 
         //option to reset 
@@ -77,12 +65,9 @@ namespace TrafficManagementSystem
         {   //by default, a-c is open
             a = "Green";
             b = "Red";
-            c = "Green";
+            c = "Red";
             d = "Red";
-            atime = 30;
-            btime = 30;
-            ctime = 30;
-            dtime = 30; 
+            atime = btime = ctime = dtime = 10;
         }
 
 
