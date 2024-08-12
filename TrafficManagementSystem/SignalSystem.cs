@@ -17,7 +17,7 @@ namespace TrafficManagementSystem
 
         //String indicating which mode they system is in: MANUAL/AUTO/EMERGENCY
         public string mode;
-
+        
         //constructor
        public  SignalSystem()
         {   //by default, a-c is open
@@ -25,10 +25,10 @@ namespace TrafficManagementSystem
             b = "Red";
             c = "Green";
             d = "Red";
-            atime = 30;
-            btime = 30;
-            ctime = 30;
-            dtime = 30;
+            atime = 10;
+            btime = 10;
+            ctime = 10;
+            dtime = 10;
             mode = "AUTO";
         }
 
@@ -65,12 +65,9 @@ namespace TrafficManagementSystem
         {   //by default, a-c is open
             a = "Green";
             b = "Red";
-            c = "Green";
+            c = "Red";
             d = "Red";
-            atime = 30;
-            btime = 30;
-            ctime = 30;
-            dtime = 30; 
+            atime = btime = ctime = dtime = 10;
         }
 
 
