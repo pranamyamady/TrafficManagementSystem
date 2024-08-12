@@ -15,6 +15,9 @@ namespace TrafficManagementSystem
         //time left on each signal to change to Green/Red
         public int atime, btime, ctime, dtime;
 
+        //String indicating which mode they system is in: MANUAL/AUTO/EMERGENCY
+        public string mode;
+
         //constructor
        public  SignalSystem()
         {   //by default, a-c is open
@@ -26,6 +29,7 @@ namespace TrafficManagementSystem
             btime = 30;
             ctime = 30;
             dtime = 30;
+            mode = "AUTO";
         }
 
         //changes a signal 
