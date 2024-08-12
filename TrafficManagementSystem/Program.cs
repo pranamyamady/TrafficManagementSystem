@@ -85,24 +85,24 @@ namespace TrafficManagementSystem {
                         display.DrawTable(signal);
                         display.DisplayMenu("Manual");
                     } while (true);
-                    option = Int32.Parse(action);
+                    //option = Int32.Parse(action);
 
-                    //if(action== "1")
-                    //{
-                    //    //change back to automatic
-                    //}
+                    if (action == "1")
+                    {
+                        //change back to automatic
+                    }
 
-                    //if(action== "3")
-                    //{
-                    //    //change to emergency
-                    //    Console.WriteLine("You are in Emergency Mode");
-                    //}
+                    if (action == "3")
+                    {
+                        //change to emergency
+                        Console.WriteLine("You are in Emergency Mode");
+                    }
 
-                    //if(action== "4")
-                    //{
+                    if (action == "4")
+                    {
 
-                    //}
-                    
+                    }
+
                 }
 
                 else if(option == 3)
@@ -156,7 +156,7 @@ namespace TrafficManagementSystem {
 
                 }
 
-                //option = Convert.ToInt32(Console.ReadLine());
+                option = Convert.ToInt32(Console.ReadLine());
             }
 
         }    
