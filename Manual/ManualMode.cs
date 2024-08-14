@@ -18,35 +18,8 @@ namespace Manual
         /// <param name="signal"></param>
         public static void manual(string s, SignalSystem signal)
         {
-            if (s == "A")
-            {
-                signal.a = "Green";
-                signal.b = "Red";
-                signal.c = "Red";
-                signal.d = "Red";
-            }
-            else if (s == "B")
-            {
-                signal.a = "Red";
-                signal.b = "Green";
-                signal.c = "Red";
-                signal.d = "Red";
-            }
-
-            else if (s == "C")
-            {
-                signal.a = "Red";
-                signal.b = "Red";
-                signal.c = "Green";
-                signal.d = "Red";
-            }
-            else
-            {
-                signal.a = "Red";
-                signal.b = "Red";
-                signal.c = "Red";
-                signal.d = "Green";
-            }
+            signal.ChangeSignal(s);
+            signal.atime = signal.btime = signal.ctime = signal.dtime = 0;
         }
     }
 }
