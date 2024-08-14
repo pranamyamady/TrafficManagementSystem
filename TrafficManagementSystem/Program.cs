@@ -1,167 +1,92 @@
 ﻿using Spectre.Console;
-using TrafficManagementSystem;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+using static System.Collections.Specialized.BitVector32;
+using TrafficManagementSystem;
+using Common;
+using Automatic;
+class Program
+{   
+    static async Task Main(string[] args)
+    {   //key to choose options
+        ConsoleKey key=ConsoleKey.D1;
+        //new signal system for junction
+        SignalSystem signal = new SignalSystem();
 
-namespace TrafficManagementSystem { 
+        //Table for display
+        var table = new Table()
+            .AddColumn("[blue]Signal[/]")
+            .AddColumn("[blue]Status[/]")
+            .AddColumn("[blue]Time Left[/]");
 
-   public class Program
-    {
+        var cts = new CancellationTokenSource();
 
-        public static void Main()
+        // Start the table update task
+        var tableTask = Task.Run(async () =>
         {
-            //new signal system for junction
-            SignalSystem signal = new SignalSystem();
-
-            //new element to display the signal status and menu
-            SignalDisplay display = new SignalDisplay();
-
-            int option = 1;
-            /*Thread thread = new Thread(() =>
-            {   while (option != 4)
+            await AnsiConsole.Live(table)
+                .StartAsync(async ctx =>
                 {
-                    Console.Clear();
-                    display.DrawTable(signal);
-                    System.Threading.Thread.Sleep(1000);
-                }
-            });
-            thread.Start();*/
-            //UI
-            
-            while (option != 4)
-            {   
-                Console.Clear();
-                //display table and menu
-                display.DrawTable(signal);
-                display.DisplayMenu("Automatic");
-                Console.Write("Enter option and press enter to change mode : ");
-                System.Threading.Thread.Sleep(1000);
-
-                if(option==1)
-                {
-                    //make changes
-                }
-
-                if (option == 2)
-                {
-                    Console.Clear();
-                    //display table and menu
-                    display.DrawTable(signal);
-                    display.DisplayMenu("Manual");
-                    System.Threading.Thread.Sleep(1000);
-
-                    //call function for maintaining signal manually
-                    string action;
-                    do
-                    {
-                        //Signal A
-
-                        if (signal.a == "Red")
-                            Console.WriteLine("Press A : To change Signal A from Red to Green");
-                        else
-                            Console.WriteLine("Press A : To change Signal A from Green to Red");
-
-                        //Signal B
-                        if (signal.b == "Red")
-                            Console.WriteLine("Press B : To change Signal B from Red to Green");
-                        else
-                            Console.WriteLine("Press B : To change Signal B from Green to Red");
-
-                        //Signal C
-                        if (signal.c == "Red")
-                            Console.WriteLine("Press C : To change Signal C from Red to Green");
-                        else
-                            Console.WriteLine("Press C : To change Signal C from Green to Red");
-
-                        //Signal D
-                        if (signal.d == "Red")
-                            Console.WriteLine("Press D : To change Signal D from Red to Green");
-                        else
-                            Console.WriteLine("Press D : To change Signal D from Green to Red");
-
-
-                        action = Console.ReadLine();
-                        //call the required action
-                        Console.Clear();
-                        display.DrawTable(signal);
-                        display.DisplayMenu("Manual");
-                    } while (action != "1" && action != "3" && action != "4");
-                    if(action== "1")
-                    {
-                        //change back to automatic
-                    }
-
-                    if(action== "3")
-                    {
-                        //change to emergency
-                    }
-
-                    if(action== "4")
-                    {
-
-                    }
                     
-                }
-
-                if(option == 3)
-                {
-                    Console.Clear();
-                    //display table and menu
-                    display.DrawTable(signal);
-                    display.DisplayMenu("Emergency");
-                    System.Threading.Thread.Sleep(1000);
-                    string emergencylane;
-                    do
+                    while(true)
                     {
-                        Console.WriteLine("Choose the Emergency Lane : ");
-                        Console.WriteLine("a.A->B");
-                        Console.WriteLine("b.A->C");
-                        Console.WriteLine("c.A->D");
-                        Console.WriteLine("d.B->A");
-                        Console.WriteLine("e.B->C");
-                        Console.WriteLine("f.B->D");
-                        Console.WriteLine("g.C->A");
-                        Console.WriteLine("h.C->B");
-                        Console.WriteLine("i.C->D");
-                        Console.WriteLine("j.D->A");
-                        Console.WriteLine("k.D->B");
-                        Console.WriteLine("l.D->C");
-                        emergencylane = Console.ReadLine();
-                        //to store signals status
-                        SignalSystem prevsystem = signal;
+                        table.Rows.Clear(); // Clear previous rows
+                        //display table
+                        //if (key == ConsoleKey.D1)
+                        {
+                            table.AddRow("A", signal.a, signal.atime.ToString());
+                            table.AddRow("B", signal.b, signal.btime.ToString());
+                            table.AddRow("C", signal.c, signal.ctime.ToString());
+                            table.AddRow("D", signal.d, signal.dtime.ToString());
+                        }
+                      /*  else//hides time left for automatic and emergency modes
+                        {
+                            table.AddRow("A", signal.a, " - ");
+                            table.AddRow("B", signal.b, " - ");
+                            table.AddRow("C", signal.c, " - ");
+                            table.AddRow("D", signal.d, " - ");
+                        }*/
+                        table.Border(TableBorder.Rounded);
+                        table.Centered();
+                        //refreshes the page
+                        ctx.Refresh();
+                        // Wait for 1 second
+                        await Task.Delay(1000); 
+                    }                    
+                });
+        }, cts.Token);
 
-                        //call necessary function to make it emergency lane
+        // Start the user input task
+        var inputTask = Task.Run(() =>
+        {
+            while (!cts.Token.IsCancellationRequested)
+            {
+                Console.Clear();
+                //tried figlet lol
+                //AnsiConsole.Write(new FigletText("Traffic Management System").Centered().Color(Color.Red));
+                AnsiConsole.MarkupLine("[underline green][bold][italic]TRAFFIC MANAGEMENT SYSTEM[/][/][/]");
+                AnsiConsole.MarkupLine("                                                                                             ");
+                AnsiConsole.MarkupLine("[green]Menu :                                                                                                             [/]");
+                AnsiConsole.MarkupLine("[red]1. Automatic                                                                                                         [/]");
+                AnsiConsole.MarkupLine("[red]2. Manual                                                                                                            [/]");
+                AnsiConsole.MarkupLine("[red]3. Emergency                                                                                                         [/]");
+                AnsiConsole.MarkupLine("[red]4. Reset                                                                                                             [/]");
+                AnsiConsole.MarkupLine("[green]MODE : AUTOMATIC                                                                                                   [/]");
 
-                        //can now restore to prevsystem
-
-                    } while (emergencylane != "1" && emergencylane != "2" && emergencylane != "4");
-                    if (emergencylane == "1") 
-                    { 
-                        //go to automatic mode
-                    }
-
-                    if(emergencylane == "2")
-                    {
-                        //go to manual mode
-                    }
-
-                    if (emergencylane == "4")
-                    {
-                        System.Environment.Exit(1);
-                    }
-                   
-
-
-                }
-
-                option = Convert.ToInt32(Console.ReadLine());
+                //by default automatic is called
+                key = AutomaticMode.AutoSignal(signal);
+                //Menu handler is called
+                Menu.TakeAction(key, signal);
+              
             }
+        }, cts.Token);
 
-        }    
+        // Wait for the table task to complete
+        await tableTask;
+
+        // Cancel the input task
+        cts.Cancel();
+        await inputTask;
     }
-    
 }

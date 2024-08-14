@@ -1,4 +1,4 @@
-using TrafficManagementSystem;
+using Common;
 
 namespace CommonComponentUnitTest
 {

@@ -1,34 +1,32 @@
-﻿using Spectre.Console;
-using TrafficManagementSystem;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace TrafficManagementSystem
+namespace Common
 {
-   public class SignalSystem
-    {   
+    public class SignalSystem
+    {
         //indicates whether each light is Red/Green
-        public string a,b,c,d;
+        public string a, b, c, d;
 
         //time left on each signal to change to Green/Red
         public int atime, btime, ctime, dtime;
 
         //String indicating which mode they system is in: MANUAL/AUTO/EMERGENCY
         public string mode;
-        
+
         //constructor
-       public  SignalSystem()
+        public SignalSystem()
         {   //by default, a-c is open
             a = "Green";
             b = "Red";
-            c = "Green";
+            c = "Red";
             d = "Red";
             atime = 10;
             btime = 10;
-            ctime = 10;
-            dtime = 10;
+            ctime = 20;
+            dtime = 30;
             mode = "AUTO";
         }
 
@@ -67,8 +65,12 @@ namespace TrafficManagementSystem
             b = "Red";
             c = "Red";
             d = "Red";
-            atime = btime = ctime = dtime = 10;
+            atime = 10;
+            btime = 10;
+            ctime = 20;
+            dtime = 30;
         }
+
 
 
 

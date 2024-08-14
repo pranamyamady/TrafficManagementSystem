@@ -11,4 +11,11 @@
     <PackageReference Include="Spectre.Console" Version="0.49.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Automatic\Automatic.csproj" />
+    <ProjectReference Include="..\Common\Common.csproj" />
+    <ProjectReference Include="..\Emergency\Emergency.csproj" />
+    <ProjectReference Include="..\Manual\Manual.csproj" />
+  </ItemGroup>
+
 </Project>
