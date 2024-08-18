@@ -7,38 +7,17 @@ using Common;
 
 namespace Emergency
 {
+    //Handles the emergency situation
     public class EmergencyState
     {
+        /// <summary>
+        /// sets the current emergency lane based on input
+        /// </summary>
+        /// <param name="signal">the current signal status</param>
+        /// <param name="lane">the input lane to be changed</param>
         public void EmergencyOperation(SignalSystem signal, string lane)
-        {
-            if (lane == "A")
-            {
-                signal.a = "Green";
-                signal.b = "Red";
-                signal.c = "Red";
-                signal.d = "Red";
-            }
-            if (lane == "B")
-            {
-                signal.a = "Red";
-                signal.b = "Green";
-                signal.c = "Red";
-                signal.d = "Red";
-            }
-            if (lane == "C")
-            {
-                signal.a = "Red";
-                signal.b = "Red";
-                signal.c = "Green";
-                signal.d = "Red";
-            }
-            if (lane == "D")
-            {
-                signal.a = "Red";
-                signal.b = "Red";
-                signal.c = "Red";
-                signal.d = "Green";
-            }
+        {   //uses the inbuilt SignalSystem method
+           signal.ChangeSignal(lane);
         }
     }
 }

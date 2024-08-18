@@ -8,14 +8,11 @@ using Common;
 namespace Manual
 {
     public class ManualMode
-    {
-
-
-        /// <summary>
+    {   /// <summary>
         /// changes signal manually
         /// </summary>
-        /// <param name="s"></param>
-        /// <param name="signal"></param>
+        /// <param name="s">the input signal to be changed</param>
+        /// <param name="signal">the current signal system state</param>
         public static void manual(string s, SignalSystem signal)
         {
             signal.ChangeSignal(s);

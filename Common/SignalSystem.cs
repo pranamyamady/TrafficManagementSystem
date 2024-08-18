@@ -18,7 +18,7 @@ namespace Common
 
         //constructor
         public SignalSystem()
-        {   //by default, a-c is open
+        {   //by default,A is Green and mode is automatic
             a = "Green";
             b = "Red";
             c = "Red";
@@ -27,11 +27,27 @@ namespace Common
             btime = 10;
             ctime = 20;
             dtime = 30;
-            mode = "AUTO";
-        }
+            mode = "Automatic";
 
-        //changes a signal 
-        // param: signal A/B/C/D
+        }
+        /// <summary>
+        /// Chooses the mode of the signal based on current keyboard input
+        /// </summary>
+        /// <param name="key">the input by user</param>
+        public void ChooseMode(ConsoleKey key)
+        {
+            if (key == ConsoleKey.D1) mode = "Automatic";
+            else if (key == ConsoleKey.D2) mode = "Manual";
+            else if (key == ConsoleKey.D3) mode = "Emergency";
+            else if (key == ConsoleKey.D4) mode = "Reset";
+            else if (key == ConsoleKey.D5) mode = "Exit";
+
+            
+        }
+        /// <summary>
+        /// changes the signal corresponding to the input
+        /// </summary>
+        /// <param name="signal">the signal in the system to be changed(A/B/C/D)</param>
         public void ChangeSignal(string signal)
         {
             switch (signal)
@@ -58,9 +74,11 @@ namespace Common
             }
         }
 
-        //option to reset 
+        /// <summary>
+        /// option to reset the timers and signals to default
+        /// </summary>
         public void Reset()
-        {   //by default, a-c is open
+        {   //by default, A is green
             a = "Green";
             b = "Red";
             c = "Red";

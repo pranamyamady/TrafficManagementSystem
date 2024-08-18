@@ -3,16 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Spectre.Console;
 using Common;
 
 namespace Automatic
 {
     public static class AutomaticMode
     {
-
+        /// <summary>
+        /// Resets the timers based on the current active signal
+        /// </summary>
+        /// <param name="signal">the current state of the signal system</param>
         public static void ResetTime(SignalSystem signal)
         {
-            // Reset times based on the current active signal
+            
             if (signal.a == "Green")
             {
                 signal.atime = 10;
@@ -49,27 +53,23 @@ namespace Automatic
         /// <param name="signal">the current signal status</param>
         /// <returns> the key last pressed</returns>
         public static ConsoleKey AutoSignal(SignalSystem signal)
-        {
-            int time = 0;
-
-            // Initialize signal times
-            signal.Reset();
-
+        {        
             while (true)
             {
+                
                 //loop decrements timer till timer reaches zero
                 while (signal.atime != 0 && signal.btime != 0 && signal.ctime != 0 && signal.dtime != 0)
-                {   
+                {
                     //checks for any interruption
                     if (Console.KeyAvailable)
                     {
-                        var key = Console.ReadKey(true).Key;
+                        var key = Console.ReadKey(true).Key;                        
                         return key;
                     }
                     //goes to sleep for 1s
                     System.Threading.Thread.Sleep(1000);
                     //decrements timers
-                    time += 1;
+                    
                     signal.atime = Math.Max(signal.atime - 1, 0);
                     signal.btime = Math.Max(signal.btime - 1, 0);
                     signal.ctime = Math.Max(signal.ctime - 1, 0);
